@@ -12,8 +12,9 @@ import java.math.BigDecimal;
 
 public class RegistroDeProducto {
     public static void main(String[] args) {
+        Categoria celulares = new Categoria(    "CELULARES");
         Producto celular = new Producto("Smnsung", "Telefono usado", new BigDecimal("1000"),
-                Categoria.CELULARES);
+                celulares);
 
         EntityManager em = JPAUtils.getEntityManager();
 
