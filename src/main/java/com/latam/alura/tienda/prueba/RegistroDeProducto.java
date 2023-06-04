@@ -17,6 +17,12 @@ public class RegistroDeProducto {
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("tienda"); //Permite crear valores/interfaces dentro de esta clase
         EntityManager em = factory.createEntityManager();
 
+        em.getTransaction().begin(); //Señalamos el incio de las transacciones
+
         em.persist(celular); //Crea una persistencia
+
+        em.getTransaction().commit(); //Envia los valores de la instancia a la BD
+
+        em.close(); //Cerramos la entidad
     }
 }
