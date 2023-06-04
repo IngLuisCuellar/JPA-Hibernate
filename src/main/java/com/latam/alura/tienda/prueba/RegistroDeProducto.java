@@ -1,5 +1,6 @@
 package com.latam.alura.tienda.prueba;
 
+import com.latam.alura.tienda.dao.CategoriaDao;
 import com.latam.alura.tienda.dao.ProductoDao;
 import com.latam.alura.tienda.modelo.Categoria;
 import com.latam.alura.tienda.modelo.Producto;
@@ -18,11 +19,13 @@ public class RegistroDeProducto {
 
         EntityManager em = JPAUtils.getEntityManager();
 
+        CategoriaDao categoriaDao = new CategoriaDao(em);
         ProductoDao productoDao = new ProductoDao(em);
 
         em.getTransaction().begin(); //Señalamos el incio de las transacciones
 
         productoDao.guardar(celular);
+        categoriaDao.guardar(celulares); //Gaurdamos la categoria
 
         em.getTransaction().commit(); //Envia los valores de la instancia a la BD
 
