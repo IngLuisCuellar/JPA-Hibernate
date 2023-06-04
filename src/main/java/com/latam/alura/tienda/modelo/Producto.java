@@ -2,6 +2,7 @@ package com.latam.alura.tienda.modelo;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity  //Anotación que nos indica que esta es una entidad que realiza mapeamientos
 @Table(name = "productos") //Esta anotaciòn permite poner el nombre de representación de la tabla Nombre tabla, nombre clase
@@ -15,6 +16,16 @@ public class Producto {
     private String nombre;
     private String descripcion;
     private BigDecimal precio;
+    private LocalDate fechaRegistro = LocalDate.now();
+    @Enumerated(EnumType.STRING)
+    private Categoria categoria;
+
+    public Producto(String nombre, String descripcion, BigDecimal precio, Categoria categoria) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.categoria = categoria;
+    }
 
     public long getId() {
         return id;
