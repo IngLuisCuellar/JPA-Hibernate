@@ -14,21 +14,24 @@ import java.math.BigDecimal;
 public class RegistroDeProducto {
     public static void main(String[] args) {
         Categoria celulares = new Categoria(    "CELULARES");
-        Producto celular = new Producto("Smnsung", "Telefono usado", new BigDecimal("1000"),
-                celulares);
 
         EntityManager em = JPAUtils.getEntityManager();
 
-        CategoriaDao categoriaDao = new CategoriaDao(em);
-        ProductoDao productoDao = new ProductoDao(em);
-
         em.getTransaction().begin(); //Señalamos el incio de las transacciones
 
-        productoDao.guardar(celular);
-        categoriaDao.guardar(celulares); //Gaurdamos la categoria
+        em.persist(celulares);
 
-        em.getTransaction().commit(); //Envia los valores de la instancia a la BD
+        celulares.setNombre("LIBROS");
 
-        em.close(); //Cerramos la entidad
+        em.flush(); //Envia a la BD permitiendo el rollback de los valores
+
+        em.clear(); //Cambia el estado a detached, pero no la cierra
+
+        celulares = em.merge(celulares); //Es necesario hacer un merge de la entidad que se va modificar, reasignandolo asi mismo
+        // para ello se hacen los constructores por defecto
+
+        celulares.setNombre("SOFTWARES");
+
+        em.flush();
     }
 }
