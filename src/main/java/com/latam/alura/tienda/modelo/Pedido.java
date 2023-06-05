@@ -16,9 +16,8 @@ public class Pedido {
 
     @ManyToOne
     private Cliente cliente;
-    @ManyToMany  //Un cliente puede tener muchos pedidos de muchos productos
-    @JoinTable(name = "items_pedido")   //Crea una nueva tabla
-    private List<Producto> productos;
+    @OneToMany
+    private List<ItemsPedido> items;
 
     public Pedido(Cliente cliente) {
         this.cliente = cliente;
