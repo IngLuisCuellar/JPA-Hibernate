@@ -3,6 +3,7 @@ package com.latam.alura.tienda.modelo;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "pedidos")
@@ -15,6 +16,9 @@ public class Pedido {
 
     @ManyToOne
     private Cliente cliente;
+    @ManyToMany  //Un cliente puede tener muchos pedidos de muchos productos
+    @JoinTable(name = "items_pedido")   //Crea una nueva tabla
+    private List<Producto> productos;
 
     public Pedido(Cliente cliente) {
         this.cliente = cliente;
