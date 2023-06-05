@@ -10,28 +10,36 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.math.BigDecimal;
+import java.util.List;
 
 public class RegistroDeProducto {
     public static void main(String[] args) {
-        Categoria celulares = new Categoria(    "CELULARES");
+        RegistarProducto();
+        EntityManager em = JPAUtils.getEntityManager();
+        ProductoDao productoDao = new ProductoDao(em);
+        Producto producto = productoDao.consultaPorId(1l);
+        System.out.println(producto.getNombre());
+
+        List<Producto> productos = productoDao.consultarTodos();
+
+        productos.forEach(prod -> System.out.println(prod.getDescripcion()));
+    }
+
+    private static void RegistarProducto() {
+        Categoria celulares = new Categoria("CELULARES");
+
+        Producto celular = new Producto("Xiaomi Redmi", "Muito legal", new BigDecimal("800"), celulares);
 
         EntityManager em = JPAUtils.getEntityManager();
+        ProductoDao productoDao = new ProductoDao(em);
+        CategoriaDao categoriaDao = new CategoriaDao(em);
 
-        em.getTransaction().begin(); //Señalamos el incio de las transacciones
+        em.getTransaction().begin();
 
-        em.persist(celulares);
+        categoriaDao.guardar(celulares);
+        productoDao.guardar(celular);
 
-        celulares.setNombre("LIBROS");
-
-        em.flush(); //Envia a la BD permitiendo el rollback de los valores
-
-        em.clear(); //Cambia el estado a detached, pero no la cierra
-
-        celulares = em.merge(celulares); //Es necesario hacer un merge de la entidad que se va modificar, reasignandolo asi mismo
-        // para ello se hacen los constructores por defecto
-
-        celulares.setNombre("SOFTWARES");
-
-        em.flush();
+        em.getTransaction().commit();
+        em.close();
     }
 }
