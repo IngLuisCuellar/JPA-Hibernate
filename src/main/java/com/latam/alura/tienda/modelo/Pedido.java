@@ -13,11 +13,11 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate fecha = LocalDate.now();
-    private BigDecimal valorTotal;
+    private BigDecimal valorTotal = new BigDecimal(0);
 
     @ManyToOne
     private Cliente cliente;
-    @OneToMany(mappedBy = "pedido") //Se conecta la lista con la entidad ItemPedido, a fin que no cree otra tabla
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL) //Al hacer una acción en pedido, hace la acción en cascada, itemPedido
     private List<ItemsPedido> items = new ArrayList<>();
 
     public Pedido(Cliente cliente) {
@@ -59,5 +59,6 @@ public class Pedido {
     public void agregarItems(ItemsPedido item){ //Agregar item en la lista
         item.setPedido(this); //Se pasa ESTE pedido
         this.items.add(item);
+        this.valorTotal = this.valorTotal.add(item.getValor());
     }
 }

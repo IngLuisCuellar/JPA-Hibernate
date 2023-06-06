@@ -8,9 +8,9 @@
         <class>com.alura.tienda.Producto</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:tienda"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:C:\Users\Asus\Desktop\Sublime\JPA\database2"/>
             <property name="javax.persistence.jdbc.user" value="sa"/>
-            <property name="javax.persistence.jdbc.password" value=""/>
+            <property name="javax.persistence.jdbc.password" value="1234"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
