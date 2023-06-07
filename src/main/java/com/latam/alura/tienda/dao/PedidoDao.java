@@ -2,6 +2,7 @@ package com.latam.alura.tienda.dao;
 
 import com.latam.alura.tienda.modelo.Pedido;
 import com.latam.alura.tienda.modelo.Producto;
+import com.latam.alura.tienda.vo.RelatorioDeVenta;
 
 import javax.persistence.EntityManager;
 import java.math.BigDecimal;
@@ -41,6 +42,17 @@ public class PedidoDao {
                 "ORDER BY item.cantidad DESC"; //Ordena de forma descendente
 
         return em.createQuery(jpql,Object[].class).getResultList();
+    }
+
+    public List<RelatorioDeVenta> relatorioDeVentasVO(){ //VO = Value Object
+        String jpql = "SELECT new com.latam.alura.tienda.vo.RelatorioDeVenta( producto.nombre, SUM(item.cantidad), " + //JPA permite usar lenguaje Java en las consultas SQL, poniendo toda la ruta
+                "MAX(pedido.fecha)) FROM Pedido pedido " +
+                "JOIN pedido.items item " +
+                "JOIN item.producto producto " +
+                "GROUP BY producto.nombre " +
+                "ORDER BY item.cantidad DESC";
+
+        return em.createQuery(jpql,RelatorioDeVenta.class).getResultList();
     }
 }
 

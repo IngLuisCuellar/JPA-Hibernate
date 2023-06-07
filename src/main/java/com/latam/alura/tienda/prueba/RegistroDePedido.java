@@ -6,6 +6,7 @@ import com.latam.alura.tienda.dao.PedidoDao;
 import com.latam.alura.tienda.dao.ProductoDao;
 import com.latam.alura.tienda.modelo.*;
 import com.latam.alura.tienda.utils.JPAUtils;
+import com.latam.alura.tienda.vo.RelatorioDeVenta;
 import net.bytebuddy.asm.MemberSubstitution;
 
 import javax.persistence.EntityManager;
@@ -38,14 +39,9 @@ public class RegistroDePedido {
         BigDecimal valorTotal = pedidoDao.valorTotalVenta();
         System.out.println("Valor total "+ valorTotal);
 
-        List<Object[]> relatorio = pedidoDao.relatorioDeVentas();
+        List<RelatorioDeVenta> relatorio = pedidoDao.relatorioDeVentasVO();
 
-        for(Object[] obj: relatorio){
-            System.out.println(obj[0]);
-            System.out.println(obj[1]);
-            System.out.println(obj[2]);
-        }
-
+        relatorio.forEach(System.out::println);
     }
 
     private static void RegistarProducto() {
