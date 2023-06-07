@@ -28,19 +28,19 @@ public class PedidoDao {
         return em.createQuery(jpql, Pedido.class).getResultList();
     }
 
-    public List<Pedido> consultaPorNombre(String nombre){
-        String jpql = "SELECT P FROM Pedido AS P WHERE P.nombre =: nombre";
-        return em.createQuery(jpql,Pedido.class).setParameter("nombre", nombre).getResultList();
+    public BigDecimal valorTotalVenta(){
+        String jpql = "SELECT SUM(p.valorTotal) FROM Pedido AS p";
+        return em.createQuery(jpql,BigDecimal.class).getSingleResult()  ;
     }
 
-    public  List<Pedido> consultaPorNombreDeFCategoria(String nombre){
-        String jpql = "SELECT P FROM Pedido AS P WHERE P.categoria.nombre=:nombre";
-        return  em.createQuery(jpql,Pedido.class).setParameter("nombre", nombre).getResultList();
-    }
+    public List<Object[]> relatorioDeVentas(){ //Devuelve arreglo de objetos, en lista
+        String jpql = "SELECT producto.nombre, SUM(item.cantidad), MAX(pedido.fecha) FROM Pedido pedido " +
+                "JOIN pedido.items item " +
+                "JOIN item.producto producto " + //Se sigue el orden lógico de los campos, concatenandolos
+                "GROUP BY producto.nombre " +
+                "ORDER BY item.cantidad DESC"; //Ordena de forma descendente
 
-    public BigDecimal consultaPrecioPorNombreDeProducto(String nombre){
-        String jpql = "SELECT P.precio FROM Pedido AS P WHERE P.nombre=:nombre";
-        return em.createQuery(jpql,BigDecimal.class).setParameter("nombre", nombre).getSingleResult();
+        return em.createQuery(jpql,Object[].class).getResultList();
     }
 }
 

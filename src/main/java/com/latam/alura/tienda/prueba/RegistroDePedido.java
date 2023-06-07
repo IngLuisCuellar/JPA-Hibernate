@@ -10,6 +10,7 @@ import net.bytebuddy.asm.MemberSubstitution;
 
 import javax.persistence.EntityManager;
 import java.math.BigDecimal;
+import java.util.List;
 
 public class RegistroDePedido {
     public static void main(String[] args) {
@@ -33,6 +34,17 @@ public class RegistroDePedido {
         clienteDao.guardar(cliente);
         pedidoDao.guardar(pedido);
         em.getTransaction().commit();
+
+        BigDecimal valorTotal = pedidoDao.valorTotalVenta();
+        System.out.println("Valor total "+ valorTotal);
+
+        List<Object[]> relatorio = pedidoDao.relatorioDeVentas();
+
+        for(Object[] obj: relatorio){
+            System.out.println(obj[0]);
+            System.out.println(obj[1]);
+            System.out.println(obj[2]);
+        }
 
     }
 
