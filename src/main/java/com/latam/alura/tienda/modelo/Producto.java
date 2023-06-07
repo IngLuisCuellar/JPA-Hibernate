@@ -6,6 +6,7 @@ import java.time.LocalDate;
 
 @Entity  //Anotación que nos indica que esta es una entidad que realiza mapeamientos
 @Table(name = "productos") //Esta anotaciòn permite poner el nombre de representación de la tabla Nombre tabla, nombre clase
+@NamedQuery(name = "Producto.consultaDePrecio", query = "SELECT P.precio FROM Producto AS P WHERE P.nombre=:nombre")
 
 public class Producto {
 
