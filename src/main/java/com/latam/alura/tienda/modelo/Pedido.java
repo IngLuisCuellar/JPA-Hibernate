@@ -15,7 +15,8 @@ public class Pedido {
     private LocalDate fecha = LocalDate.now();
     private BigDecimal valorTotal = new BigDecimal(0);
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY) //Estrategia de cargamiento, los llama unicamente cuando sean solicitados
+    //Por defecto todos son EAGER, es decir, con un cargamiento anticipado
     private Cliente cliente;
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL) //Al hacer una acción en pedido, hace la acción en cascada, itemPedido
     private List<ItemsPedido> items = new ArrayList<>();
