@@ -1,5 +1,7 @@
 package com.latam.alura.tienda.modelo;
 
+import net.bytebuddy.dynamic.loading.InjectionClassLoader;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -7,7 +9,7 @@ import java.time.LocalDate;
 @Entity  //Anotación que nos indica que esta es una entidad que realiza mapeamientos
 @Table(name = "productos") //Esta anotaciòn permite poner el nombre de representación de la tabla Nombre tabla, nombre clase
 @NamedQuery(name = "Producto.consultaDePrecio", query = "SELECT P.precio FROM Producto AS P WHERE P.nombre=:nombre")
-
+@Inheritance(strategy = InheritanceType.JOINED)//Tablas separadas, SINGLE_TABLE una sola tabla
 public class Producto {
 
     @Id //Identificador del Id de la base de datos
