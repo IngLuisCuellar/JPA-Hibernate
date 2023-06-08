@@ -62,4 +62,7 @@ public class Pedido {
         this.items.add(item);
         this.valorTotal = this.valorTotal.add(item.getValor());
     }
+
+    public Pedido() {
+    }
 }

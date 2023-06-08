@@ -5,18 +5,18 @@ import javax.persistence.*;
 @Entity
 @Table(name = "clientes")
 public class Cliente {
+
+    @Embedded //Inyección de la clase DatosPersonales
+    private DatosPersonales datosPersonales;
     public Cliente() {
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nombre;
-    private String dni;
 
     public Cliente(String nombre, String dni) {
-        this.nombre = nombre;
-        this.dni = dni;
+        this.datosPersonales=new DatosPersonales(nombre, dni);
     }
 
     public Long getId() {
@@ -24,18 +24,18 @@ public class Cliente {
     }
 
     public String getDni() {
-        return dni;
+        return datosPersonales.getDni(); //Delegamos la responsabilidada
     }
 
     public void setDni(String dni) {
-        this.dni = dni;
+        this.datosPersonales.setDni(dni);
     }
 
     public String getNombre() {
-        return nombre;
+        return datosPersonales.getNombre();
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.datosPersonales.setNombre(nombre);
     }
 }

@@ -90,7 +90,8 @@ public class LoadRecords {
 	}
 	
 	private static List<String> readFile(String type) throws FileNotFoundException {
-		File file = new File("C:\\Users\\Public\\Alura\\jpa\\"+type+".txt");
+		File file = new File("C:\\Users\\Asus\\eclipse-workspace\\Persistencia_Con_JPA_Hibernate\\src\\main\\resources\\utils\\" +type+ ".txt");
+
 		Scanner scan = new Scanner(file);
 		List<String> pedido= new ArrayList<>();
 		while(scan.hasNextLine()){
